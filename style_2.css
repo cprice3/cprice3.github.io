@@ -1,0 +1,73 @@
+header, section, article, footer  {
+    margin: 0;
+    padding: 1px;
+    border: 1px solid #000000;
+    color: #ffffff
+}
+
+
+body {
+    background:#000000
+}
+
+.mainflex, header, footer {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+} 
+
+.one {
+    background: #16cf5d;
+    margin: 20px;
+    width: 200px;
+    padding: 50px;
+}
+
+.two {
+    background:#16cf5d;
+    margin: 20px;
+    width: 200px;
+    padding: 50px;
+}
+
+.three {
+    background:#16cf5d;
+    margin: 20px;
+    width: 200px;
+    padding: 50px;
+}
+
+.four {
+    background:#16cf5d;
+    margin: 20px;
+    width: 200px;
+    padding: 50px;
+}
+
+.five {
+    background:#16cf5d;
+    margin: 20px;
+    width: 200px;
+    padding: 50px;
+}
+
+.six {
+    background:#16cf5d;
+    margin: 20px;
+    width: 200px;
+    padding: 50px;
+}
+
+.intro {
+    background:#4478d8;
+    margin: 20px;
+    width: 200px;
+    padding: 50px;
+}
+
+.bottom {
+    background:#4478d8;
+    margin: 20px;
+    width: 200px;
+    padding: 50px;
+}
