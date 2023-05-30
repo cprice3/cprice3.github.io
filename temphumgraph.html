@@ -1,8 +1,7 @@
-html
-Copy code
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Line Graph</title>
     <title>Google Sheets Line Graph</title>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
@@ -19,12 +18,8 @@ Copy code
         }
 
         function fetchDataAndDrawCharts() {
-            var startDate = new Date();
-            startDate.setHours(startDate.getHours() - 12); // Substract 12 hours from current time
-            var startTimestamp = startDate.toISOString();
-
-            var queryStringTemp = encodeURIComponent("select B, C where B >= timestamp '" + startTimestamp + "' limit 400 label C 'Temperature (°C)'");
-            var queryStringHumidity = encodeURIComponent("select B, D where B >= timestamp '" + startTimestamp + "' limit 400 label D 'Humidity (%)'");
+            var queryStringTemp = encodeURIComponent('select B, C limit 400 label C "Temperature (°C)"');
+            var queryStringHumidity = encodeURIComponent('select B, D limit 400 label D "Humidity (%)"');
 
             var queryTemp = new google.visualization.Query(
                 'https://docs.google.com/spreadsheets/d/1lkBDiWV8zLEw5IP6J71npqJSLwpoK9ZyNYFPk0W-hIg/gviz/tq?gid=0&headers=1&tq=' + queryStringTemp
@@ -63,9 +58,6 @@ Copy code
                 curveType: 'function',
                 legend: {
                     position: 'bottom'
-                },
-                hAxis: {
-                    format: 'MMM d, HH:mm' // Display day and time on the x-axis
                 }
             };
 
@@ -79,9 +71,6 @@ Copy code
                 curveType: 'function',
                 legend: {
                     position: 'bottom'
-                },
-                hAxis: {
-                    format: 'MMM d, HH:mm' // Display day and time on the x-axis
                 }
             };
 
@@ -91,7 +80,6 @@ Copy code
     </script>
 </head>
 <body>
-    <div id="chart" style="width: 100%; height: 400px;"></div>
     <div id="temperature-chart" style="width: 100%; height: 400px;"></div>
     <div id="humidity-chart" style="width: 100%; height: 400px;"></div>
 </body>
