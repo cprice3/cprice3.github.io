@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="refresh" content="60" />
     <title>Temperature Monitor</title>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
@@ -10,11 +11,7 @@
         google.charts.setOnLoadCallback(initialize);
 
         function initialize() {
-            var startDate = new Date();
-            startDate.setHours(startDate.getHours() - 12); // Subtract 12 hours from current time
-            var startTimestamp = startDate.toISOString();
-
-            var queryString = encodeURIComponent("select B, C, D where B >= timestamp '" + startTimestamp + "' limit 400 label C '°C'");
+            var queryString = encodeURIComponent('select B, C, D limit 400 label C "°C"');
             var query = new google.visualization.Query(
                 'https://docs.google.com/spreadsheets/d/1lkBDiWV8zLEw5IP6J71npqJSLwpoK9ZyNYFPk0W-hIg/gviz/tq?gid=0&headers=1&tq=' + queryString
             );
@@ -37,9 +34,6 @@
                 curveType: 'function',
                 legend: {
                     position: 'bottom'
-                },
-                hAxis: {
-                    format: 'MMM d, HH:mm' // Display day and time on the x-axis
                 }
             };
 
