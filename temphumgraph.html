@@ -1,19 +1,17 @@
+html
+Copy code
+<!DOCTYPE html>
+<html>
 <head>
-    <meta http-equiv="refresh" content="60" />
-    <title>Temperature Monitor</title>
     <title>Google Sheets Line Graph</title>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
         google.charts.load('current', {
-@@ -11,24 +10,48 @@
             'packages': ['corechart']
         });
         google.charts.setOnLoadCallback(initialize);
 
         function initialize() {
-            var queryString = encodeURIComponent('select B, C, D limit 400 label C "°C"');
-            var query = new google.visualization.Query(
-                'https://docs.google.com/spreadsheets/d/1lkBDiWV8zLEw5IP6J71npqJSLwpoK9ZyNYFPk0W-hIg/gviz/tq?gid=0&headers=1&tq=' + queryString
             fetchDataAndDrawCharts();
 
             // Refresh the data and charts every 60 seconds
@@ -21,8 +19,12 @@
         }
 
         function fetchDataAndDrawCharts() {
-            var queryStringTemp = encodeURIComponent('select B, C limit 400 label C "Temperature (°C)"');
-            var queryStringHumidity = encodeURIComponent('select B, D limit 400 label D "Humidity (%)"');
+            var startDate = new Date();
+            startDate.setHours(startDate.getHours() - 12); // Substract 12 hours from current time
+            var startTimestamp = startDate.toISOString();
+
+            var queryStringTemp = encodeURIComponent("select B, C where B >= timestamp '" + startTimestamp + "' limit 400 label C 'Temperature (°C)'");
+            var queryStringHumidity = encodeURIComponent("select B, D where B >= timestamp '" + startTimestamp + "' limit 400 label D 'Humidity (%)'");
 
             var queryTemp = new google.visualization.Query(
                 'https://docs.google.com/spreadsheets/d/1lkBDiWV8zLEw5IP6J71npqJSLwpoK9ZyNYFPk0W-hIg/gviz/tq?gid=0&headers=1&tq=' + queryStringTemp
@@ -30,26 +32,21 @@
             var queryHumidity = new google.visualization.Query(
                 'https://docs.google.com/spreadsheets/d/1lkBDiWV8zLEw5IP6J71npqJSLwpoK9ZyNYFPk0W-hIg/gviz/tq?gid=0&headers=1&tq=' + queryStringHumidity
             );
-            query.send(handleSampleDataQueryResponse);
 
             queryTemp.send(handleTemperatureQueryResponse);
             queryHumidity.send(handleHumidityQueryResponse);
         }
 
-        function handleSampleDataQueryResponse(response) {
         function handleTemperatureQueryResponse(response) {
             if (response.isError()) {
-                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
                 alert('Error in temperature query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
                 return;
             }
 
             var data = response.getDataTable();
-            displayChart(data);
             displayTemperatureChart(data);
         }
 
-        function displayChart(data) {
         function handleHumidityQueryResponse(response) {
             if (response.isError()) {
                 alert('Error in humidity query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
@@ -64,11 +61,14 @@
             var options = {
                 title: 'Temperature Data',
                 curveType: 'function',
-@@ -37,12 +60,26 @@
+                legend: {
+                    position: 'bottom'
+                },
+                hAxis: {
+                    format: 'MMM d, HH:mm' // Display day and time on the x-axis
                 }
             };
 
-            var chart = new google.visualization.LineChart(document.getElementById('chart'));
             var chart = new google.visualization.LineChart(document.getElementById('temperature-chart'));
             chart.draw(data, options);
         }
@@ -79,11 +79,13 @@
                 curveType: 'function',
                 legend: {
                     position: 'bottom'
+                },
+                hAxis: {
+                    format: 'MMM d, HH:mm' // Display day and time on the x-axis
                 }
             };
 
             var chart = new google.visualization.LineChart(document.getElementById('humidity-chart'));
-            var chart = new google.visualization.LineChart(document.getElementById('chart'));
             chart.draw(data, options);
         }
     </script>
