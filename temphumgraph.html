@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Temperature and Humidity Graph</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <canvas id="chart"></canvas>
+
+  <script>
+    // Fetch data from the CSV link using Google Sheets API
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/1lkBDiWV8zLEw5IP6J71npqJSLwpoK9ZyNYFPk0W-hIg/gviz/tq?tqx=out:csv&sheet=Sheet1';
+
+    fetch(csvUrl)
+      .then(response => response.text())
+      .then(csvData => {
+        const parsedData = CSVToArray(csvData);
+
+        // Extract temperature and humidity data
+        const labels = parsedData.slice(1).map(row => row[0]);
+        const temperatures = parsedData.slice(1).map(row => parseFloat(row[1]));
+        const humidities = parsedData.slice(1).map(row => parseFloat(row[2]));
+
+        // Find max and min values
+        const maxTemperature = Math.max(...temperatures);
+        const minTemperature = Math.min(...temperatures);
+        const maxHumidity = Math.max(...humidities);
+        const minHumidity = Math.min(...humidities);
+
+        // Create the chart
+        const ctx = document.getElementById('chart').getContext('2d');
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: 'Temperature',
+                data: temperatures,
+                borderColor: 'red',
+                fill: false
+              },
+              {
+                label: 'Humidity',
+                data: humidities,
+                borderColor: 'blue',
+                fill: false
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            },
+            plugins: {
+              title: {
+                display: true,
+                text: 'Temperature and Humidity over the Past 24 Hours'
+              }
+            }
+          }
+        });
+
+        // Display max and min values
+        document.body.innerHTML += `
+          <p>Max Temperature: ${maxTemperature}</p>
+          <p>Min Temperature: ${minTemperature}</p>
+          <p>Max Humidity: ${maxHumidity}</p>
+          <p>Min Humidity: ${minHumidity}</p>
+        `;
+      });
+
+    // Helper function to parse CSV data
+    function CSVToArray(csvString) {
+      const rows = csvString.split('\n');
+      return rows.map(row => row.split(','));
+    }
+  </script>
+</body>
+</html>
