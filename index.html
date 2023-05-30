@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home Weather</title>
+    <meta http-equiv="refresh" content="60" />
+    <title>Temperature Monitor</title>
+    <title>Google Sheets Line Graph</title>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
         google.charts.load('current', {
-            'packages': ['corechart']
-        });
+@@ -11,24 +10,48 @@
         google.charts.setOnLoadCallback(initialize);
 
         function initialize() {
+            var queryString = encodeURIComponent('select B, C, D limit 400 label C "°C"');
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1lkBDiWV8zLEw5IP6J71npqJSLwpoK9ZyNYFPk0W-hIg/gviz/tq?gid=0&headers=1&tq=' + queryString
             fetchDataAndDrawCharts();
 
             // Refresh the data and charts every 60 seconds
@@ -26,21 +30,26 @@
             var queryHumidity = new google.visualization.Query(
                 'https://docs.google.com/spreadsheets/d/1lkBDiWV8zLEw5IP6J71npqJSLwpoK9ZyNYFPk0W-hIg/gviz/tq?gid=0&headers=1&tq=' + queryStringHumidity
             );
+            query.send(handleSampleDataQueryResponse);
 
             queryTemp.send(handleTemperatureQueryResponse);
             queryHumidity.send(handleHumidityQueryResponse);
         }
 
+        function handleSampleDataQueryResponse(response) {
         function handleTemperatureQueryResponse(response) {
             if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
                 alert('Error in temperature query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
                 return;
             }
 
             var data = response.getDataTable();
+            displayChart(data);
             displayTemperatureChart(data);
         }
 
+        function displayChart(data) {
         function handleHumidityQueryResponse(response) {
             if (response.isError()) {
                 alert('Error in humidity query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
@@ -55,11 +64,11 @@
             var options = {
                 title: 'Temperature Data',
                 curveType: 'function',
-                legend: {
-                    position: 'bottom'
+@@ -37,12 +60,26 @@
                 }
             };
 
+            var chart = new google.visualization.LineChart(document.getElementById('chart'));
             var chart = new google.visualization.LineChart(document.getElementById('temperature-chart'));
             chart.draw(data, options);
         }
@@ -79,115 +88,8 @@
     </script>
 </head>
 <body>
+    <div id="chart" style="width: 100%; height: 400px;"></div>
     <div id="temperature-chart" style="width: 100%; height: 400px;"></div>
     <div id="humidity-chart" style="width: 100%; height: 400px;"></div>
 </body>
 </html>
-In this updated code, the fetchDataAndDrawCharts function is called initially to fetch data and draw the charts. Then, using setInterval, the function is scheduled to be executed every 60 seconds to refresh the data and redraw the charts.
-
-Please note that the refresh interval is set to 60 seconds (60000 milliseconds) as per your requirement
-
-
-
-
-
-User
-can you change the time frame to 12 hours of data shown on the graph along with the day it is associated with?
-ChatGPT
-To change the time frame to display 12 hours of data along with the associated day on the graph, you can modify the code as follows:
-
-html
-Copy code
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Google Sheets Line Graph</title>
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
-    <script>
-        google.charts.load('current', {
-            'packages': ['corechart']
-        });
-        google.charts.setOnLoadCallback(initialize);
-
-        function initialize() {
-            fetchDataAndDrawCharts();
-
-            // Refresh the data and charts every 60 seconds
-            setInterval(fetchDataAndDrawCharts, 60000);
-        }
-
-        function fetchDataAndDrawCharts() {
-            var startDate = new Date();
-            startDate.setHours(startDate.getHours() - 12); // Substract 12 hours from current time
-            var startTimestamp = startDate.toISOString();
-
-            var queryStringTemp = encodeURIComponent("select B, C where B >= timestamp '" + startTimestamp + "' limit 400 label C 'Temperature (°C)'");
-            var queryStringHumidity = encodeURIComponent("select B, D where B >= timestamp '" + startTimestamp + "' limit 400 label D 'Humidity (%)'");
-
-            var queryTemp = new google.visualization.Query(
-                'https://docs.google.com/spreadsheets/d/1lkBDiWV8zLEw5IP6J71npqJSLwpoK9ZyNYFPk0W-hIg/gviz/tq?gid=0&headers=1&tq=' + queryStringTemp
-            );
-            var queryHumidity = new google.visualization.Query(
-                'https://docs.google.com/spreadsheets/d/1lkBDiWV8zLEw5IP6J71npqJSLwpoK9ZyNYFPk0W-hIg/gviz/tq?gid=0&headers=1&tq=' + queryStringHumidity
-            );
-
-            queryTemp.send(handleTemperatureQueryResponse);
-            queryHumidity.send(handleHumidityQueryResponse);
-        }
-
-        function handleTemperatureQueryResponse(response) {
-            if (response.isError()) {
-                alert('Error in temperature query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-                return;
-            }
-
-            var data = response.getDataTable();
-            displayTemperatureChart(data);
-        }
-
-        function handleHumidityQueryResponse(response) {
-            if (response.isError()) {
-                alert('Error in humidity query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-                return;
-            }
-
-            var data = response.getDataTable();
-            displayHumidityChart(data);
-        }
-
-        function displayTemperatureChart(data) {
-            var options = {
-                title: 'Temperature Data',
-                curveType: 'function',
-                legend: {
-                    position: 'bottom'
-                },
-                hAxis: {
-                    format: 'MMM d, HH:mm' // Display day and time on the x-axis
-                }
-            };
-
-            var chart = new google.visualization.LineChart(document.getElementById('temperature-chart'));
-            chart.draw(data, options);
-        }
-
-        function displayHumidityChart(data) {
-            var options = {
-                title: 'Humidity Data',
-                curveType: 'function',
-                legend: {
-                    position: 'bottom'
-                },
-                hAxis: {
-                    format: 'MMM d, HH:mm' // Display day and time on the x-axis
-                }
-            };
-
-            var chart = new google.visualization.LineChart(document.getElementById('humidity-chart'));
-            chart.draw(data, options);
-        }
-    </script>
-</head>
-<body>
-    <div id="temperature-chart" style="width: 100%; height: 400px;"></div>
-    <
