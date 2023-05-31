@@ -1,101 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Home Page</title>
+  <title>Responsive Navigation Bar</title>
   <style>
-    /* Add some basic styling */
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      font-family: Arial, sans-serif;
     }
 
-    nav {
-      background-color: #f2f2f2;
-      padding: 10px;
+    /* Navigation bar */
+    .navbar {
+      background-color: #333;
+      overflow: hidden;
     }
 
-    nav ul {
+    .navbar ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
+      overflow: hidden;
+      background-color: #333;
     }
 
-    nav ul li {
-      margin: 0 10px;
+    .navbar li {
+      float: left;
     }
 
-    nav ul li a {
-      text-decoration: none;
-      color: #333;
-    }
-
-    nav ul li a:hover {
-      color: #555;
-    }
-
-    h1 {
+    .navbar li a {
+      display: block;
+      color: #fff;
       text-align: center;
-      margin: 40px 0;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .navbar li a:hover {
+      background-color: #555;
     }
 
     /* Responsive styles */
     @media screen and (max-width: 600px) {
-      nav ul {
-        display: none; /* Hide the regular navigation menu */
+      .navbar li {
+        float: none;
       }
 
-      /* Style for the mobile menu */
-      .mobile-menu {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #f2f2f2;
-        padding: 10px;
+      .navbar ul {
+        overflow: hidden;
+        display: none;
       }
 
-      .mobile-menu li {
-        margin: 10px 0;
+      .navbar li a {
+        display: block;
+        text-align: left;
       }
 
-      .mobile-menu li a {
-        text-decoration: none;
-        color: #333;
-      }
-
-      .mobile-menu li a:hover {
-        color: #555;
+      .navbar.icon {
+        float: right;
+        display: block;
       }
     }
   </style>
 </head>
 <body>
-  <nav>
+  <div class="navbar" id="myNavbar">
     <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="temphumgraph.html">Laramie</a></li>
+      <li><a class="active" href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li class="icon">
+        <a href="javascript:void(0);" onclick="toggleNavbar()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </li>
     </ul>
-  </nav>
+  </div>
 
-  <!-- Mobile menu -->
-  <nav class="mobile-menu">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="temphumgraph.html">Laramie</a></li>
-    </ul>
-  </nav>
-
-  <h1>Welcome to the Home Page</h1>
-
-  <img src="https://oilcitynews.nyc3.cdn.digitaloceanspaces.com/wp-content/uploads/2020/05/052020-lightning-1536x1024.jpg" alt="Center Photo" style="display: block; margin: 0 auto;">
-  
   <script>
-    // Toggle the mobile menu visibility
-    function toggleMobileMenu() {
-      var mobileMenu = document.querySelector('.mobile-menu');
-      mobileMenu.style.display = (mobileMenu.style.display === 'none') ? 'flex' : 'none';
+    function toggleNavbar() {
+      var x = document.getElementById("myNavbar");
+      if (x.className === "navbar") {
+        x.className += " responsive";
+      } else {
+        x.className = "navbar";
+      }
     }
   </script>
 </body>
