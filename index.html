@@ -44,12 +44,29 @@
     /* Responsive styles */
     @media screen and (max-width: 600px) {
       nav ul {
-        flex-direction: column;
-        align-items: center;
+        display: none; /* Hide the regular navigation menu */
       }
 
-      nav ul li {
+      /* Style for the mobile menu */
+      .mobile-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f2f2f2;
+        padding: 10px;
+      }
+
+      .mobile-menu li {
         margin: 10px 0;
+      }
+
+      .mobile-menu li a {
+        text-decoration: none;
+        color: #333;
+      }
+
+      .mobile-menu li a:hover {
+        color: #555;
       }
     }
   </style>
@@ -58,9 +75,28 @@
   <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
-      <li><a href="temphumgraph.html">Laramie</a></li>
+      <li><a href="temphumgraph.html">Another Page</a></li>
     </ul>
   </nav>
+
+  <!-- Mobile menu -->
+  <nav class="mobile-menu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="another-page.html">Another Page</a></li>
+    </ul>
+  </nav>
+
   <h1>Welcome to the Home Page</h1>
+
+  <img src="your-image-filename.jpg" alt="Center Photo" style="display: block; margin: 0 auto;">
+  
+  <script>
+    // Toggle the mobile menu visibility
+    function toggleMobileMenu() {
+      var mobileMenu = document.querySelector('.mobile-menu');
+      mobileMenu.style.display = (mobileMenu.style.display === 'none') ? 'flex' : 'none';
+    }
+  </script>
 </body>
 </html>
