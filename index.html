@@ -1,134 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Responsive Navigation Bar</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Website</title>
   <style>
+    /* Basic styles */
     body {
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
     }
-
-    /* Navigation bar */
+    
+    /* Navigation bar styles */
     .navbar {
       background-color: #333;
       overflow: hidden;
-      display: flex;
-      justify-content: space-between;
     }
-
-    .navbar .logo {
-      padding: 14px 16px;
-      color: #fff;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .navbar .search {
-      margin: 10px;
-      display: flex;
-      align-items: center;
-    }
-
-    .navbar .search input[type="text"] {
-      padding: 6px;
-      border: none;
-    }
-
-    .navbar .search button {
-      padding: 6px 10px;
-      background-color: #555;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-    }
-
-    .navbar .navigation {
-      flex-grow: 1;
-    }
-
-    .navbar ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #333;
-    }
-
-    .navbar li {
+    
+    .navbar a {
       float: left;
-    }
-
-    .navbar li a {
-      display: block;
-      color: #fff;
+      color: #f2f2f2;
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;
+      font-size: 17px;
     }
-
-    .navbar li a:hover {
-      background-color: #555;
+    
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
     }
-
-    /* Responsive styles */
-    @media screen and (max-width: 600px) {
-      .navbar .search {
-        display: none;
-      }
-
-      .navbar .navigation {
-        display: none;
-      }
-
-      .navbar.responsive .navigation {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .navbar.responsive .navigation li {
-        float: none;
-      }
-
-      .navbar.responsive .navigation li a {
-        padding: 10px;
-      }
-
-      .navbar.responsive .navigation li a:hover {
-        background-color: #555;
-      }
+    
+    .navbar a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    /* Logo styles */
+    .logo {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    
+    /* Page content styles */
+    .content {
+      padding: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="navbar" id="myNavbar">
-    <a class="logo" href="#">Logo</a>
-    <div class="search">
-      <input type="text" placeholder="Search...">
-      <button type="submit">Search</button>
-    </div>
-    <div class="navigation">
-      <ul>
-        <li><a class="active" href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-    <a href="javascript:void(0);" class="icon" onclick="toggleNavbar()">
-      <i class="fa fa-bars"></i>
-    </a>
+  <!-- Navigation bar -->
+  <div class="navbar">
+    <a class="active" href="#home">Home</a>
+    <a href="temphumgraph.html">Laramie</a>
+  <!-- Logo -->
+  <div class="logo">
+    <img src="your-logo.png" alt="Logo" width="100">
   </div>
-
-  <script>
-    function toggleNavbar() {
-      var x = document.getElementById("myNavbar");
-      if (x.className === "navbar") {
-        x.className += " responsive";
-      } else {
-        x.className = "navbar";
-      }
-    }
-  </script>
+  
+  <!-- Page content -->
+  <div class="content">
+    <h1>Welcome to the Home Page</h1>
+    <p>This is the content of your home page.</p>
+  </div>
+  
+  <!-- About Page -->
+  <div class="content" id="about">
+    <h1>About Us</h1>
+    <p>This is the content of your About page.</p>
+  </div>
+  
+  <!-- Contact Page -->
+  <div class="content" id="contact">
+    <h1>Contact Us</h1>
+    <p>This is the content of your Contact page.</p>
+  </div>
 </body>
 </html>
