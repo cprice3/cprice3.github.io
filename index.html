@@ -1,50 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="refresh" content="60" />
-    <title>Temperature Monitor</title>
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
-    <script>
-        google.charts.load('current', {
-            'packages': ['corechart']
-        });
-        google.charts.setOnLoadCallback(initialize);
-
-        function initialize() {
-            var queryString = encodeURIComponent('select B, C, D limit 400 label C "°C"');
-            var query = new google.visualization.Query(
-                'https://docs.google.com/spreadsheets/d/1lkBDiWV8zLEw5IP6J71npqJSLwpoK9ZyNYFPk0W-hIg/gviz/tq?gid=0&headers=1&tq=' + queryString
-            );
-            query.send(handleSampleDataQueryResponse);
-        }
-
-        function handleSampleDataQueryResponse(response) {
-            if (response.isError()) {
-                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-                return;
-            }
-
-            var data = response.getDataTable();
-            displayChart(data);
-        }
-
-        function displayChart(data) {
-            var options = {
-                title: 'Temperature Data',
-                curveType: 'function',
-                legend: {
-                    position: 'bottom'
-                }
-            };
-
-            var chart = new google.visualization.LineChart(document.getElementById('chart'));
-            chart.draw(data, options);
-        }
-    </script>
+  <title>My Landing Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+    }
+    
+    h1 {
+      margin: 0;
+    }
+    
+    section {
+      padding: 50px;
+    }
+    
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+    }
+    
+    iframe {
+      width: 100%;
+      height: 60px;
+      border: 0;
+    }
+  </style>
 </head>
 <body>
-    <a href="temphumgraph.html">Go to new page</h1>
-    
-    <div id="chart" style="width: 100%; height: 400px;"></div>
+  <iframe src="navbar.html" frameborder="0"></iframe>
+
+  <header>
+    <h1>Welcome to My Landing Page</h1>
+  </header>
+  
+  <section>
+    <h2>About</h2>
+    <p>This is a simple landing page example.</p>
+  </section>
+  
+  <section>
+    <h2>Contact</h2>
+    <p>Email: contact@example.com</p>
+    <p>Phone: 123-456-7890</p>
+  </section>
+  
+  <footer>
+    <p>&copy; 2023 My Landing Page. All rights reserved.</p>
+  </footer>
 </body>
 </html>
