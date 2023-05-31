@@ -13,6 +13,38 @@
     .navbar {
       background-color: #333;
       overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .navbar .logo {
+      padding: 14px 16px;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .navbar .search {
+      margin: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .search input[type="text"] {
+      padding: 6px;
+      border: none;
+    }
+
+    .navbar .search button {
+      padding: 6px 10px;
+      background-color: #555;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .navbar .navigation {
+      flex-grow: 1;
     }
 
     .navbar ul {
@@ -41,40 +73,51 @@
 
     /* Responsive styles */
     @media screen and (max-width: 600px) {
-      .navbar li {
-        float: none;
-      }
-
-      .navbar ul {
-        overflow: hidden;
+      .navbar .search {
         display: none;
       }
 
-      .navbar li a {
-        display: block;
-        text-align: left;
+      .navbar .navigation {
+        display: none;
       }
 
-      .navbar.icon {
-        float: right;
-        display: block;
+      .navbar.responsive .navigation {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .navbar.responsive .navigation li {
+        float: none;
+      }
+
+      .navbar.responsive .navigation li a {
+        padding: 10px;
+      }
+
+      .navbar.responsive .navigation li a:hover {
+        background-color: #555;
       }
     }
   </style>
 </head>
 <body>
   <div class="navbar" id="myNavbar">
-    <ul>
-      <li><a class="active" href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="temphumgraph.html">Laramie</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li class="icon">
-        <a href="javascript:void(0);" onclick="toggleNavbar()">
-          <i class="fa fa-bars"></i>
-        </a>
-      </li>
-    </ul>
+    <a class="logo" href="#">Logo</a>
+    <div class="search">
+      <input type="text" placeholder="Search...">
+      <button type="submit">Search</button>
+    </div>
+    <div class="navigation">
+      <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="toggleNavbar()">
+      <i class="fa fa-bars"></i>
+    </a>
   </div>
 
   <script>
